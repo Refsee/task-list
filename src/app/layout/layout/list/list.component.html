@@ -1,0 +1,39 @@
+<div class="wrapper">
+  <div *ngIf="TaskList.length; else noTask">
+    <div class="item">
+      <p>#</p>
+      <p>Task</p>
+      <p>Check</p>
+      <p>DONE/IN PROGRESS</p>
+      <p>Edit</p>
+      <p>DELETE</p>
+    </div>
+    <div class="item effect" *ngFor="let item of TaskList; index as i">
+      <p>{{ i + 1 }}</p>
+      <p>{{ item.name }}</p>
+      <p>
+        <input
+          type="checkbox"
+          [checked]="item.check"
+          (click)="change(item.check, i)"
+        />
+      </p>
+      <p [ngClass]="{ done: item.check, progress: !item.check }">
+        {{ item.check ? "DONE" : "IN PROGRESS" }}
+      </p>
+      <p><button class="btn btn-edit" (click)="eTask(i)">Edit</button></p>
+      <p>
+        <button
+          class="btn btn-delete"
+          [disabled]="!item.check"
+          (click)="dTask(i)"
+        >
+          DELETE
+        </button>
+      </p>
+    </div>
+  </div>
+  <ng-template #noTask>
+    <h2 class="error">No Task. Please add task</h2>
+  </ng-template>
+</div>
